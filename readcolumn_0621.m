@@ -5,6 +5,7 @@ INTERCEPT=-1024.3;
 SLOP=1.2882;
 loca=0;
 Pthreshold=50;
+mu=0.3;
 %CSA=9.892; %cm2;
 
 [TMP,CSV_NAME]=xlsread('D:\work\mechanical\project_for_graduate\matlab\mycode\data\hipdata_0629.csv','D:D');
@@ -37,7 +38,8 @@ end
 for FN=1:filenumber
     filecontent = dicomread(filelist_aftercheck{FN});
     [psize_x,psize_y]=size(filecontent);
-
+    EA(FN)=0;
+    GA(FN)=0;
     pix_num(FN)=0;
     for i=1:psize_y
         for j=1:psize_x
@@ -46,13 +48,23 @@ for FN=1:filenumber
                 pix_num(FN)=pix_num(FN)+1;
                 rou(i,j)=(double(FUC)*(double(pixel(i,j))-double(INTERCEPT)))/double(SLOP);%mg/cm3
                 E(i,j)=double(10.5)*(double((1e-3))*double(rou(i,j)))^2.57;
-                
-            end
+             end
         end
     end
-    
+  
     Pixel_scale(FN)=sqrt(CSV_CSA(FN)/pix_num(FN));
 
+    for i=1:psize_y
+        for j=1:psize_x
+            if(pixel(i,j) > Pthreshold)
+                EA(FN)=EA(FN) + double(double(E(i,j))*double(Pixel_scale(FN)^2));
+             end
+        end
+    end
+
+    GA(FN)=EA(FN)/(2*(1+mu));
+    EA=EA';
+    GA=GA';
     
     loca=0;
     min=1e20;
