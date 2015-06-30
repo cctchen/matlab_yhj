@@ -1,5 +1,5 @@
 clear;
-clear;
+
 FUC=1.073;
 INTERCEPT=-1024.3;
 SLOP=1.2882;
