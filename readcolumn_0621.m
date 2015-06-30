@@ -7,7 +7,7 @@ loca=0;
 Pthreshold=50;
 %CSA=9.892; %cm2;
 
-[TMP,CSV_NAME]=xlsread('D:\work\mechanical\project_for_graduate\image\new_analysis\HipData1.csv','C:C');
+[TMP,CSV_NAME]=xlsread('D:\work\mechanical\project_for_graduate\image\new_analysis\hipdata_0629.csv','C:C');
 CSV_CSA=xlsread('D:\work\mechanical\project_for_graduate\image\new_analysis\HipData1.csv','M:M');
 CSMI_inplane=xlsread('D:\work\mechanical\project_for_graduate\image\new_analysis\HipData1.csv','R:R');
 SM_inplane=xlsread('D:\work\mechanical\project_for_graduate\image\new_analysis\HipData1.csv','U:U');
