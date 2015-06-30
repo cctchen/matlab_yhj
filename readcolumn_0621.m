@@ -7,11 +7,11 @@ loca=0;
 Pthreshold=50;
 %CSA=9.892; %cm2;
 
-[TMP,CSV_NAME]=xlsread('D:\work\mechanical\project_for_graduate\image\new_analysis\hipdata_0629.csv','D:D');
-CSV_CSA=xlsread('D:\work\mechanical\project_for_graduate\image\new_analysis\hipdata_0629.csv','FP:FP');
-CSMI_inplane=xlsread('D:\work\mechanical\project_for_graduate\image\new_analysis\hipdata_0629.csv','FX:FX');
-SM_inplane=xlsread('D:\work\mechanical\project_for_graduate\image\new_analysis\hipdata_0629.csv','GA:GA');
-[status,list]=system('dir D:\work\mechanical\project_for_graduate\image\new_analysis\*FN.dcm /S/B');
+[TMP,CSV_NAME]=xlsread('D:\work\mechanical\project_for_graduate\matlab\mycode\data\hipdata_0629.csv','D:D');
+CSV_CSA=xlsread('D:\work\mechanical\project_for_graduate\matlab\mycode\data\hipdata_0629.csv','FP:FP');
+CSMI_inplane=xlsread('D:\work\mechanical\project_for_graduate\matlab\mycode\data\hipdata_0629.csv','FX:FX');
+SM_inplane=xlsread('D:\work\mechanical\project_for_graduate\matlab\mycode\data\hipdata_0629.csv','GA:GA');
+[status,list]=system('dir D:\work\mechanical\project_for_graduate\matlab\mycode\data\*FN.dcm /S/B');
 
 filelist = strsplit(list);
 [file_temp,filenumber] = size(filelist);
