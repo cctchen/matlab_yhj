@@ -1,6 +1,5 @@
 clear;
-clear;
-clear;
+
 FUC=1.073;
 INTERCEPT=-1024.3;
 SLOP=1.2882;
@@ -12,7 +11,7 @@ Pthreshold=50;
 CSV_CSA=xlsread('D:\work\mechanical\project_for_graduate\image\new_analysis\HipData1.csv','M:M');
 CSMI_inplane=xlsread('D:\work\mechanical\project_for_graduate\image\new_analysis\HipData1.csv','R:R');
 SM_inplane=xlsread('D:\work\mechanical\project_for_graduate\image\new_analysis\HipData1.csv','U:U');
-[status,list]=system('dir D:\work\mechanical\project_for_graduate\image\new_analysis\*FN.tmp /S/B');
+[status,list]=system('dir D:\work\mechanical\project_for_graduate\image\new_analysis\*FN.dcm /S/B');
 
 filelist = strsplit(list);
 [file_temp,filenumber] = size(filelist);
