@@ -4,10 +4,9 @@ FUC=1.073;
 INTERCEPT=-1024.3;
 SLOP=1.2882;
 loca=0;
-Pthreshold=0;
+Pthreshold=50;
 mu=0.3;
-%pixel_A = 0.048828^2;
-%Pixel_scale=0.048828;
+pixel_A = 0.48828^2;
 %CSA=9.892; %cm2;
 
 [TMP,CSV_NAME]=xlsread('D:\work\mechanical\project_for_graduate\matlab\mycode\data\hipdata_0629.csv','D:D');
@@ -43,30 +42,34 @@ for FN=1:filenumber
     EA(FN)=0;
     GA(FN)=0;
     pix_num(FN)=0;
-    for i=1:psize_y
-        for j=1:psize_x
-            pixel(i,j) = filecontent(i,j);
-            if(pixel(i,j) > Pthreshold)
-                pix_num(FN)=pix_num(FN)+1;
-                rou(i,j)=(double(FUC)*(double(pixel(i,j))-double(INTERCEPT)))/double(SLOP);%mg/cm3
-                E(i,j)=double(10.5)*(double((1e-3))*double(rou(i,j)))^2.57;
-             end
-        end
-    end
-  
-   Pixel_scale(FN)=sqrt(CSV_CSA(FN)/pix_num(FN));
+%     for i=1:psize_y
+%         for j=1:psize_x
+%             pixel(i,j) = filecontent(i,j);
+%             if(pixel(i,j) > Pthreshold)
+%                 pix_num(FN)=pix_num(FN)+1;
+%                 rou(i,j)=(double(FUC)*(double(pixel(i,j))-double(INTERCEPT)))/double(SLOP);%mg/cm3
+%                 E(i,j)=double(10.5)*(double((1e-3))*double(rou(i,j)))^2.57;
+%              end
+%         end
+%     end
+rou=(double(FUC).*(double(pixel)-double(INTERCEPT)))./double(SLOP)
+E=double(10.5).*(double((1e-3)).*double(rou)).^2.57;
 
-    for i=1:psize_y
-        for j=1:psize_x
-            if(pixel(i,j) > Pthreshold)
-                EA(FN)=EA(FN) + double(double(E(i,j))*double(Pixel_scale(FN)^2));
-             end
-        end
-    end
+%    Pixel_scale(FN)=sqrt(CSV_CSA(FN)/pix_num(FN));
 
-    GA(FN)=EA(FN)/(2*(1+mu));
-    EA=EA';
-    GA=GA';
+%     for i=1:psize_y
+%         for j=1:psize_x
+%             if(pixel(i,j) > Pthreshold)
+%                 EA(FN)=EA(FN) + double(double(E(i,j))*double(Pixel_scale(FN)^2));
+%              end
+%         end
+%     end
+
+EA=sum(sum(double(E).*pixel_A)));
+
+GA(FN)=EA(FN)/(2*(1+mu));
+EA=EA';
+GA=GA';
     
     loca=0;
     min=1e20;
