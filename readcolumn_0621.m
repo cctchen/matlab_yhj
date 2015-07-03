@@ -8,7 +8,7 @@ Pthreshold=0;
 mu=0.3;
 %pixel_A = 0.048828^2;
 %Pixel_scale=0.048828;
-%CSA=9.892; %cm2;
+
 
 [TMP,CSV_NAME]=xlsread('D:\work\mechanical\project_for_graduate\matlab\mycode\data\hipdata_0629.csv','D:D');
 CSV_CSA=xlsread('D:\work\mechanical\project_for_graduate\matlab\mycode\data\hipdata_0629.csv','FP:FP');
