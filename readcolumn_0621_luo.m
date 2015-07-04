@@ -54,7 +54,8 @@ for FN=1:filenumber
 %              end
 %         end
 %     end
-rou=(double(FUC).*(double(pixel)-double(INTERCEPT)))./double(SLOP);
+%rou=(double(FUC).*(double(pixel)-double(INTERCEPT)))./double(SLOP);
+rou=(double(FUC).*(double(pixel)))./double(SLOP);
 E=double(10.5).*(double((1e-3)).*double(rou)).^2.57;
 
 %    Pixel_scale(FN)=sqrt(CSV_CSA(FN)/pix_num(FN));

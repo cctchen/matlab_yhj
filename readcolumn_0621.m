@@ -1,13 +1,13 @@
 clear;
 
 FUC=1.073;
-INTERCEPT=-1024.3;
+INTERCEPT=1024.3;
 SLOP=1.2882;
 loca=0;
-Pthreshold=0;
+Pthreshold=1025;
 mu=0.3;
-%pixel_A = 0.048828^2;
-%Pixel_scale=0.048828;
+pixel_A = 0.048828^2;
+Pixel_scale=0.048828;
 
 
 [TMP,CSV_NAME]=xlsread('D:\work\mechanical\project_for_graduate\matlab\mycode\data\hipdata_0629.csv','D:D');
@@ -54,12 +54,12 @@ for FN=1:filenumber
         end
     end
   
-   Pixel_scale(FN)=sqrt(CSV_CSA(FN)/pix_num(FN));
+   %Pixel_scale(FN)=sqrt(CSV_CSA(FN)/pix_num(FN));
 
     for i=1:psize_y
         for j=1:psize_x
             if(pixel(i,j) > Pthreshold)
-                EA(FN)=EA(FN) + double(double(E(i,j))*double(Pixel_scale(FN)^2));
+                EA(FN)=EA(FN) + double(double(E(i,j))*double(Pixel_scale^2));
              end
         end
     end
@@ -77,14 +77,14 @@ for FN=1:filenumber
         for i=1:(banl-1)
             for x=1:psize_x
                 if(double(pixel(i,x))> Pthreshold)
-                    up = (double(up) + double(double(E(i,x))*double(Pixel_scale(FN)^2)));
+                    up = (double(up) + double(double(E(i,x))*double(Pixel_scale^2)));
                 end
             end
         end
         for i=banl:psize_y
             for x=1:psize_x
                 if(double(pixel(i,x))> Pthreshold)
-                    down=(double(down) + double(double(E(i,x))*double(Pixel_scale(FN)^2)));
+                    down=(double(down) + double(double(E(i,x))*double(Pixel_scale^2)));
                 end
             end
         end
@@ -105,8 +105,8 @@ for FN=1:filenumber
     for row=1:(ban_axis(FN)-1)
         for i=1:psize_x
             if(pixel(row,i)>4)
-                EI_up=double(EI_up)+double(10.5)*((double((1e-3))*double(rou(row,i)))^2.57)*((((ban_axis(FN)-row)-1)*Pixel_scale(FN) + Pixel_scale(FN)/2)^2)*(Pixel_scale(FN)^2);
-                I_up=double(I_up)+double(((((ban_axis(FN)-row)-1)*Pixel_scale(FN) + Pixel_scale(FN)/2)^2)*(Pixel_scale(FN)^2));
+                EI_up=double(EI_up)+double(10.5)*((double((1e-3))*double(rou(row,i)))^2.57)*double((((ban_axis(FN)-row)*Pixel_scale )^2)*(Pixel_scale^2));
+                I_up=double(I_up)+double((((ban_axis(FN)-row)*Pixel_scale )^2)*(Pixel_scale^2));
             end
         end
     end
@@ -116,8 +116,8 @@ for FN=1:filenumber
     for row=ban_axis(FN):psize_y
         for i=1:psize_x
             if(pixel(row,i)>4)
-                EI_down=double(EI_down)+double(10.5)*((double((1e-3))*double(rou(row,i)))^2.57)*((((ban_axis(FN)-row)-1)*Pixel_scale(FN) + Pixel_scale(FN)/2)^2)*(Pixel_scale(FN)^2);
-                I_down=double(I_down)+double(((((ban_axis(FN)-row)-1)*Pixel_scale(FN) + Pixel_scale(FN)/2)^2)*(Pixel_scale(FN)^2));
+                EI_down=double(EI_down)+double(10.5)*((double((1e-3))*double(rou(row,i)))^2.57)*double((((row-ban_axis(FN))*Pixel_scale )^2)*(Pixel_scale^2));
+                I_down=double(I_down)+double((((row-ban_axis(FN))*Pixel_scale )^2)*(Pixel_scale^2));
             end
         end
     end
@@ -129,10 +129,10 @@ for FN=1:filenumber
 EI=EI';
 I=I';
 ban_axis(FN)=ban_axis(FN)';
-[r,p]=corr(CSMI_inplane,EI)
-[r,p]=corr(CSMI_inplane,I)
-[r,p]=corr(CSMI_inplane,EA)
-[r,p]=corr(CSMI_inplane,GA)
+[r1,p1]=corr(CSMI_inplane,EI)
+[r2,p2]=corr(CSMI_inplane,I)
+[r3,p3]=corr(CSMI_inplane,EA)
+[r4,p4]=corr(CSMI_inplane,GA)
 
 
 
