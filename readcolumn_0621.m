@@ -129,10 +129,10 @@ for FN=1:filenumber
 EI=EI';
 I=I';
 ban_axis(FN)=ban_axis(FN)';
-[r,p]=corr(CSMI_inplane,EI)
-[r,p]=corr(CSMI_inplane,I)
-[r,p]=corr(CSMI_inplane,EA)
-[r,p]=corr(CSMI_inplane,GA)
+[r1,p1]=corr(CSMI_inplane,EI)
+[r2,p2]=corr(CSMI_inplane,I)
+[r3,p3]=corr(CSMI_inplane,EA)
+[r4,p4]=corr(CSMI_inplane,GA)
 
 
 
