@@ -105,8 +105,8 @@ for FN=1:filenumber
     for row=1:(ban_axis(FN)-1)
         for i=1:psize_x
             if(pixel(row,i)>4)
-                EI_up=double(EI_up)+double(10.5)*((double((1e-3))*double(rou(row,i)))^2.57)*double((((ban_axis(FN)-row)*Pixel_scale )^2)*(Pixel_scale^2));
-                I_up=double(I_up)+double((((ban_axis(FN)-row)*Pixel_scale )^2)*(Pixel_scale^2));
+                EI_up=double(EI_up)+double(10.5)*((double((1e-3))*double(rou(row,i)))^2.57)*((((ban_axis(FN)-row)-1)*Pixel_scale + Pixel_scale/2)^2)*(Pixel_scale^2);
+                I_up=double(I_up)+double(((((ban_axis(FN)-row)-1)*Pixel_scale + Pixel_scale/2)^2)*(Pixel_scale^2));
             end
         end
     end
@@ -116,8 +116,8 @@ for FN=1:filenumber
     for row=ban_axis(FN):psize_y
         for i=1:psize_x
             if(pixel(row,i)>4)
-                EI_down=double(EI_down)+double(10.5)*((double((1e-3))*double(rou(row,i)))^2.57)*double((((row-ban_axis(FN))*Pixel_scale )^2)*(Pixel_scale^2));
-                I_down=double(I_down)+double((((row-ban_axis(FN))*Pixel_scale )^2)*(Pixel_scale^2));
+                EI_down=double(EI_down)+double(10.5)*((double((1e-3))*double(rou(row,i)))^2.57)*((((row-ban_axis(FN))+1)*Pixel_scale - Pixel_scale/2)^2)*(Pixel_scale^2);
+                I_down=double(I_down)+double(((((row-ban_axis(FN))+1)*Pixel_scale - Pixel_scale/2)^2)*(Pixel_scale^2));
             end
         end
     end
