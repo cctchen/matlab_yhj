@@ -55,7 +55,7 @@ for FN=1:filenumber
              end
         end
     end
-    [range_x(FN),range_y(FN)]=find(pixel>Pthreshold);
+    [range_x,range_y]=find(pixel > Pthreshold);
     min_x(FN)=min(range_x);
     max_x(FN)=max(range_x);
     min_y(FN)=min(range_y);
@@ -105,7 +105,9 @@ for FN=1:filenumber
         end
     end
     ban_axis(FN)=loca;
-    
+    d2top(FN)=ban_axis(FN)-min_y(FN)-0.5;
+    d2bottom(FN)=max_y(FN)-ban_axis(FN)+0.5;   
+    d_max(FN)=max(d2top(FN),d2bottom(FN));
     
     EI_up=0;
     I_up=0;
@@ -131,15 +133,18 @@ for FN=1:filenumber
 
     EI(FN)=EI_up+EI_down;
     I(FN)=I_up+I_down;
+    Z_y(FN)=I(FN)/(d_max(FN)*Pixel_scale(FN));
  end
 ave_rou=ave_rou';
 EI=EI';
 I=I';
+Z_y=Z_y';
 ban_axis(FN)=ban_axis(FN)';
 [r1,p1]=corr(CSMI_inplane,EI)
 [r2,p2]=corr(CSMI_inplane,I)
 [r3,p3]=corr(CSMI_inplane,EA)
 [r4,p4]=corr(CSMI_inplane,GA)
+[r5,p5]=corr(SM_inplane,Z_y)
 
 
 
