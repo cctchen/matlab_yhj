@@ -8,13 +8,14 @@ Pthreshold=0;
 mu=0.3;
 %pixel_A = 0.048828^2;
 %Pixel_scale=0.048828;
+%datapath='D:\work\mechanical\project_for_graduate\matlab\mycode\data\';
+datapath='D:\CODE\yhjmatlab\matlab_yhj\data\';
 
-
-[TMP,CSV_NAME]=xlsread('D:\work\mechanical\project_for_graduate\matlab\mycode\data\hipdata_0629.csv','D:D');
-CSV_CSA=xlsread('D:\work\mechanical\project_for_graduate\matlab\mycode\data\hipdata_0629.csv','FP:FP');
-CSMI_inplane=xlsread('D:\work\mechanical\project_for_graduate\matlab\mycode\data\hipdata_0629.csv','FX:FX');
-SM_inplane=xlsread('D:\work\mechanical\project_for_graduate\matlab\mycode\data\hipdata_0629.csv','GA:GA');
-[status,list]=system('dir D:\work\mechanical\project_for_graduate\matlab\mycode\data\*FN.dcm /S/B');
+[TMP,CSV_NAME]=xlsread(strcat(datapath,'hipdata_0629.csv'),'D:D');
+CSV_CSA=xlsread(strcat(datapath, 'hipdata_0629.csv'),'FP:FP');
+CSMI_inplane=xlsread(strcat(datapath, 'hipdata_0629.csv'),'FX:FX');
+SM_inplane=xlsread([datapath 'hipdata_0629.csv','GA:GA');
+[status,list]=system(['dir ' datapath '*FN.dcm /S/B']);
 
 filelist = strsplit(list);
 [file_temp,filenumber] = size(filelist);
@@ -133,16 +134,18 @@ for FN=1:filenumber
 
     EI(FN)=EI_up+EI_down;
     I(FN)=I_up+I_down;
-    Z(FN)
+    Z_y(FN)=I(FN)/(d_max(FN)*Pixel_scale(FN));
  end
 ave_rou=ave_rou';
 EI=EI';
 I=I';
+Z_y=Z_y';
 ban_axis(FN)=ban_axis(FN)';
 [r1,p1]=corr(CSMI_inplane,EI)
 [r2,p2]=corr(CSMI_inplane,I)
 [r3,p3]=corr(CSMI_inplane,EA)
 [r4,p4]=corr(CSMI_inplane,GA)
+[r5,p5]=corr(SM_inplane,Z_y)
 
 
 

@@ -8,13 +8,13 @@ Pthreshold=0;
 mu=0.3;
 %pixel_A = 0.048828^2;
 %Pixel_scale=0.048828;
+datapath='D:\work\mechanical\project_for_graduate\matlab\mycode\data\';
 
-
-[TMP,CSV_NAME]=xlsread('D:\work\mechanical\project_for_graduate\matlab\mycode\data\hipdata_0629.csv','D:D');
-CSV_CSA=xlsread('D:\work\mechanical\project_for_graduate\matlab\mycode\data\hipdata_0629.csv','FP:FP');
-CSMI_inplane=xlsread('D:\work\mechanical\project_for_graduate\matlab\mycode\data\hipdata_0629.csv','FX:FX');
-SM_inplane=xlsread('D:\work\mechanical\project_for_graduate\matlab\mycode\data\hipdata_0629.csv','GA:GA');
-[status,list]=system('dir D:\work\mechanical\project_for_graduate\matlab\mycode\data\*FN.dcm /S/B');
+[TMP,CSV_NAME]=xlsread([datapath,'hipdata_0629.csv'],'D:D');
+CSV_CSA=xlsread([datapath 'hipdata_0629.csv'],'FP:FP');
+CSMI_inplane=xlsread([datapath, 'hipdata_0629.csv'],'FX:FX');
+SM_inplane=xlsread([datapath 'hipdata_0629.csv'],'GA:GA');
+[status,list]=system(['dir ' datapath '*FN.dcm /S/B']);
 
 filelist = strsplit(list);
 [file_temp,filenumber] = size(filelist);
@@ -52,9 +52,14 @@ for FN=1:filenumber
                 rou(i,j)=(double(FUC)*(double(pixel(i,j))-double(INTERCEPT)))/double(SLOP);%mg/cm3
                 E(i,j)=double(10.5)*(double((1e-3))*double(rou(i,j)))^2.57;
                 tmp_rou=tmp_rou+rou(i,j);
-             end
+            else    %element less than threshold assign to 0
+                pixel(i,j)=0;
+            end
         end
     end
+    
+    project_y{FN}=sum(pixel,2);
+    
     [range_x,range_y]=find(pixel > Pthreshold);
     min_x(FN)=min(range_x);
     max_x(FN)=max(range_x);
