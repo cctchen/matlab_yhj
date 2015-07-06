@@ -39,7 +39,7 @@ end
 
 for FN=1:filenumber
     filecontent = dicomread(filelist_aftercheck{FN});
-    [psize_x,psize_y]=size(filecontent);
+    [psize_y,psize_x]=size(filecontent);
     EA(FN)=0;
     GA(FN)=0;
     pix_num(FN)=0;
@@ -58,8 +58,6 @@ for FN=1:filenumber
         end
     end
     
-    project_y{FN}=sum(pixel,2);
-    
     [range_x,range_y]=find(pixel > Pthreshold);
     min_x(FN)=min(range_x);
     max_x(FN)=max(range_x);
@@ -68,6 +66,18 @@ for FN=1:filenumber
     ave_rou(FN)=tmp_rou/pix_num(FN);
     Pixel_scale(FN)=sqrt(CSV_CSA(FN)/pix_num(FN));
 
+    tmp_rou_p=0;
+    project_y=sum(pixel,2);
+    for i=1:psize_y
+        if(project_y(i) > Pthreshold)
+            rou_p(i,FN)=(double(FUC)*(double(project_y(i))-double(INTERCEPT)))/double(SLOP);%mg/cm3
+            E_p(i,FN)=double(10.5)*(double((1e-3))*double(rou_p(i)))^2.57;
+            tmp_rou_p=tmp_rou_p+rou_p(i);
+        end
+    end
+
+  
+    
     for i=1:psize_y
         for j=1:psize_x
             if(pixel(i,j) > Pthreshold)
