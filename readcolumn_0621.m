@@ -7,7 +7,7 @@ loca=0;
 Pthreshold=0;
 mu=0.3;
 %pixel_A = 0.048828^2;
-%Pixel_scale=0.048828;
+Pixel_scale=0.048828;
 datapath='D:\work\mechanical\project_for_graduate\matlab\mycode\data\';
 
 [TMP,CSV_NAME]=xlsread([datapath,'hipdata_0629.csv'],'D:D');
@@ -65,7 +65,7 @@ for FN=1:filenumber
     min_y(FN)=min(range_y);
     max_y(FN)=max(range_y);
     ave_rou(FN)=tmp_rou/pix_num(FN);
-    Pixel_scale(FN)=sqrt(CSV_CSA(FN)/pix_num(FN));
+   % Pixel_scale(FN)=sqrt(CSV_CSA(FN)/pix_num(FN));
 
    % tmp_rou_p=0; %projection
     project_y=sum(pixel,2); %projection along row direction
@@ -82,7 +82,7 @@ for FN=1:filenumber
     for i=1:psize_y
         for j=1:psize_x
             if(pixel(i,j) > Pthreshold)
-                EA(FN)=EA(FN) + double(double(E(i,j))*double(Pixel_scale(FN)^2));
+                EA(FN)=EA(FN) + double(double(E(i,j))*double(Pixel_scale^2));
              end
         end
     end
@@ -93,7 +93,7 @@ for FN=1:filenumber
     
     for i=1:psize_y
         if(project_y(i) > Pthreshold)
-            EA_p(FN)=EA_p(FN) + double(double(E_p(i,FN))*double(Pixel_scale(FN)^2));
+            EA_p(FN)=EA_p(FN) + double(double(E_p(i,FN))*double(Pixel_scale^2));
          end
     end
     GA_p(FN)=EA_p(FN)/(2*(1+mu));
@@ -110,14 +110,14 @@ for FN=1:filenumber
         for i=1:(banl-1)
             for x=1:psize_x
                 if(double(pixel(i,x))> Pthreshold)
-                    up = (double(up) + double(double(E(i,x))*double(Pixel_scale(FN)^2)));
+                    up = (double(up) + double(double(E(i,x))*double(Pixel_scale^2)));
                 end
             end
         end
         for i=banl:psize_y
             for x=1:psize_x
                 if(double(pixel(i,x))> Pthreshold)
-                    down=(double(down) + double(double(E(i,x))*double(Pixel_scale(FN)^2)));
+                    down=(double(down) + double(double(E(i,x))*double(Pixel_scale^2)));
                 end
             end
         end
@@ -140,8 +140,8 @@ for FN=1:filenumber
     for row=1:(ban_axis(FN)-1)
         for i=1:psize_x
             if(pixel(row,i)>Pthreshold)
-                EI_up=double(EI_up)+double(10.5)*((double((1e-3))*double(rou(row,i)))^2.57)*((((ban_axis(FN)-row)-1)*Pixel_scale(FN) + Pixel_scale(FN)/2)^2)*(Pixel_scale(FN)^2);
-                I_up=double(I_up)+double(((((ban_axis(FN)-row)-1)*Pixel_scale(FN) + Pixel_scale(FN)/2)^2)*(Pixel_scale(FN)^2));
+                EI_up=double(EI_up)+double(10.5)*((double((1e-3))*double(rou(row,i)))^2.57)*((((ban_axis(FN)-row)-1)*Pixel_scale + Pixel_scale/2)^2)*(Pixel_scale^2);
+                I_up=double(I_up)+double(((((ban_axis(FN)-row)-1)*Pixel_scale + Pixel_scale/2)^2)*(Pixel_scale^2));
             end
         end
     end
@@ -151,22 +151,22 @@ for FN=1:filenumber
     for row=ban_axis(FN):psize_y
         for i=1:psize_x
             if(pixel(row,i)>Pthreshold)
-                EI_down=double(EI_down)+double(10.5)*((double((1e-3))*double(rou(row,i)))^2.57)*((((row-ban_axis(FN))+1)*Pixel_scale(FN) - Pixel_scale(FN)/2)^2)*(Pixel_scale(FN)^2);
-                I_down=double(I_down)+double(((((row-ban_axis(FN))+1)*Pixel_scale(FN) - Pixel_scale(FN)/2)^2)*(Pixel_scale(FN)^2));
+                EI_down=double(EI_down)+double(10.5)*((double((1e-3))*double(rou(row,i)))^2.57)*((((row-ban_axis(FN))+1)*Pixel_scale - Pixel_scale/2)^2)*(Pixel_scale^2);
+                I_down=double(I_down)+double(((((row-ban_axis(FN))+1)*Pixel_scale - Pixel_scale/2)^2)*(Pixel_scale^2));
             end
         end
     end
 
     EI(FN)=EI_up+EI_down;
     I(FN)=I_up+I_down;
-    Z_y(FN)=I(FN)/(d_max(FN)*Pixel_scale(FN));
+    Z_y(FN)=I(FN)/(d_max(FN)*Pixel_scale);
     
     EI_p_up=0;
     I_p_up=0;
     for row=1:(ban_axis(FN)-1)
         if(project_y(row)>Pthreshold)
-                EI_p_up=double(EI_p_up)+double(29.8)*((double((1e-3))*double(rou_p(row)))^1.56)*((((ban_axis(FN)-row)-1)*Pixel_scale(FN) + Pixel_scale(FN)/2)^2)*(Pixel_scale(FN)^2);
-                I_p_up=double(I_p_up)+double(((((ban_axis(FN)-row)-1)*Pixel_scale(FN) + Pixel_scale(FN)/2)^2)*(Pixel_scale(FN)^2));
+                EI_p_up=double(EI_p_up)+double(29.8)*((double((1e-3))*double(rou_p(row)))^1.56)*((((ban_axis(FN)-row)-1)*Pixel_scale + Pixel_scale/2)^2)*(Pixel_scale^2);
+                I_p_up=double(I_p_up)+double(((((ban_axis(FN)-row)-1)*Pixel_scale + Pixel_scale/2)^2)*(Pixel_scale^2));
           end
      end
     
@@ -175,19 +175,22 @@ for FN=1:filenumber
     I_p_down=0;
     for row=ban_axis(FN):psize_y
         if(project_y(row)>Pthreshold)
-                EI_p_down=double(EI_p_down)+double(29.8)*((double((1e-3))*double(rou_p(row)))^1.56)*((((row-ban_axis(FN))+1)*Pixel_scale(FN) - Pixel_scale(FN)/2)^2)*(Pixel_scale(FN)^2);
-                I_p_down=double(I_p_down)+double(((((row-ban_axis(FN))+1)*Pixel_scale(FN) - Pixel_scale(FN)/2)^2)*(Pixel_scale(FN)^2));
+                EI_p_down=double(EI_p_down)+double(29.8)*((double((1e-3))*double(rou_p(row)))^1.56)*((((row-ban_axis(FN))+1)*Pixel_scale - Pixel_scale/2)^2)*(Pixel_scale^2);
+                I_p_down=double(I_p_down)+double(((((row-ban_axis(FN))+1)*Pixel_scale - Pixel_scale/2)^2)*(Pixel_scale^2));
          end
     end
     EI_p(FN)=EI_p_up+EI_p_down;
     I_p(FN)=I_p_up+I_p_down;
-    Z_p_y(FN)=I_p(FN)/(d_max(FN)*Pixel_scale(FN));
+    Z_p_y(FN)=I_p(FN)/(d_max(FN)*Pixel_scale);
       
  end
 ave_rou=ave_rou';
 EI=EI';
 I=I';
 Z_y=Z_y';
+EI_p=EI_p';
+I_p=I_p';
+Z_p_y=Z_p_y';
 ban_axis(FN)=ban_axis(FN)';
 [r1,p1]=corr(CSMI_inplane,EI)
 [r2,p2]=corr(CSMI_inplane,I)
@@ -196,7 +199,7 @@ ban_axis(FN)=ban_axis(FN)';
 [r5,p5]=corr(SM_inplane,Z_y)
 [r6,p6]=corr(EA_p,EA)
 [r7,p7]=corr(EI_p,EI)
-[r8,p8]=corr(I_p,I)
+[r8,p8]=corr(GA_p,GA)
 
 
 
