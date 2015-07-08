@@ -13,7 +13,6 @@ path = 'D:\work\mechanical\project_for_graduate\matlab\mycode\data\';
 [TMP,CSV_NAME]=xlsread([path '\hipdata_0629.csv'],'D:D');
 CSV_CSA=xlsread([path '\hipdata_0629.csv'],'FP:FP');
 CSMI_inplane=xlsread([path '\hipdata_0629.csv'],'FX:FX');
-CSMI_outplane=xlsread([path '\hipdata_0629.csv'],'FY:FY');
 SM_inplane=xlsread([path '\hipdata_0629.csv'],'GA:GA');
 [status,list]=system(['dir ' path '*FN.dcm /S/B']);
 
@@ -37,7 +36,7 @@ for FN=1:filenumber
     GA(FN)=EA(FN)./(2*(1+mu));
     
     [nn,mm] = find(pixel>0);
-    %pixel(nn,mm) = pixel(mm,nn) + 1024;% wrong!!!! add into none o??????
+    pixel(nn,mm) = pixel(mm,nn) + 1024;% wrong!!!! add into none o??????
     x_c = (max(nn) + min(nn))/2.;
     y_c = (max(mm) + min(mm))/2.;
     [pp,qq] = size(pixel);
@@ -49,7 +48,7 @@ for FN=1:filenumber
  end
 
 [r1,p1]=corr(CSMI_inplane,EIx')
-[r2,p2]=corr(CSMI_outplane,EIy')
+[r2,p2]=corr(CSMI_inplane,EIy')
 [r3,p3]=corr(CSV_CSA,EA')
 [r4,p4]=corr(CSV_CSA,GA')
 
