@@ -10,11 +10,11 @@ pixel_A = (0.48828*0.001)^2;
 pixel_scale=0.48828*0.001;
 %CSA=9.892; %cm2;
 path = 'D:\work\mechanical\project_for_graduate\matlab\mycode\data\';
-[TMP,CSV_NAME]=xlsread([path '\hipdata_0629.csv'],'D:D');
-CSV_CSA=xlsread([path '\hipdata_0629.csv'],'FP:FP');
-CSMI_inplane=xlsread([path '\hipdata_0629.csv'],'FX:FX');
-CSMI_outplane=xlsread([path '\hipdata_0629.csv'],'FY:FY');
-SM_inplane=xlsread([path '\hipdata_0629.csv'],'GA:GA');
+[TMP,CSV_NAME]=xlsread([path '\hipdb_0709.csv'],'D:D');
+CSV_CSA=xlsread([path '\hipdb_0709.csv'],'FP:FP');
+CSMI_inplane=xlsread([path '\hipdb_0709.csv'],'FX:FX');
+CSMI_outplane=xlsread([path '\hipdb_0709.csv'],'FY:FY');
+SM_inplane=xlsread([path '\hipdb_0709.csv'],'GA:GA');
 [status,list]=system(['dir ' path '*FN.dcm /S/B']);
 
 filelist = strsplit(list);

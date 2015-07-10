@@ -10,10 +10,10 @@ mu=0.3;
 Pixel_scale=0.048828;
 datapath='D:\work\mechanical\project_for_graduate\matlab\mycode\data\';
 
-[TMP,CSV_NAME]=xlsread([datapath,'hipdata_0629.csv'],'D:D');
-CSV_CSA=xlsread([datapath 'hipdata_0629.csv'],'FP:FP');
-CSMI_inplane=xlsread([datapath, 'hipdata_0629.csv'],'FX:FX');
-SM_inplane=xlsread([datapath 'hipdata_0629.csv'],'GA:GA');
+[TMP,CSV_NAME]=xlsread([datapath,'hipdb_0709.csv'],'D:D');
+CSV_CSA=xlsread([datapath 'hipdb_0709.csv'],'FP:FP');
+CSMI_inplane=xlsread([datapath, 'hipdb_0709.csv'],'FX:FX');
+SM_inplane=xlsread([datapath 'hipdb_0709.csv'],'GA:GA');
 [status,list]=system(['dir ' datapath '*FN.dcm /S/B']);
 
 filelist = strsplit(list);
@@ -65,7 +65,7 @@ for FN=1:filenumber
     min_y(FN)=min(range_y);
     max_y(FN)=max(range_y);
     ave_rou(FN)=tmp_rou/pix_num(FN);
-   % Pixel_scale(FN)=sqrt(CSV_CSA(FN)/pix_num(FN));
+    %Pixel_scale(FN)=sqrt(CSV_CSA(FN)/pix_num(FN));
 
    % tmp_rou_p=0; %projection
     project_y=sum(pixel,2); %projection along row direction
@@ -88,8 +88,7 @@ for FN=1:filenumber
     end
         
     GA(FN)=EA(FN)/(2*(1+mu));
-    EA=EA';
-    GA=GA';
+    
     
     for i=1:psize_y
         if(project_y(i) > Pthreshold)
@@ -97,8 +96,7 @@ for FN=1:filenumber
          end
     end
     GA_p(FN)=EA_p(FN)/(2*(1+mu));
-    EA_p=EA_p';
-    GA_p=GA_p';
+    
     
     
     loca=0;
@@ -187,10 +185,14 @@ for FN=1:filenumber
 ave_rou=ave_rou';
 EI=EI';
 I=I';
+EA=EA';
+GA=GA';
 Z_y=Z_y';
 EI_p=EI_p';
 I_p=I_p';
 Z_p_y=Z_p_y';
+EA_p=EA_p';
+GA_p=GA_p';
 ban_axis(FN)=ban_axis(FN)';
 [r1,p1]=corr(CSMI_inplane,EI)
 [r2,p2]=corr(CSMI_inplane,I)
