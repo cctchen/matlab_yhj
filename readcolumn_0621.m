@@ -17,6 +17,7 @@
     CSMI_inplane=xlsread([datapath, 'hipdb_0709.csv'],'FX:FX');
     CSMI_outplane=xlsread([datapath 'hipdb_0709.csv'],'FY:FY');
     SM_inplane=xlsread([datapath 'hipdb_0709.csv'],'GA:GA');
+    SM_outplane=xlsread([datapath 'hipdb_0709.csv'],'GB:GB');
     [status,list]=system(['dir ' datapath '*FN.dcm /S/B']);
 
     filelist = strsplit(list);
@@ -53,7 +54,7 @@
                     rou(i,j)=(double(FUC)*(double(pixel(i,j))-double(INTERCEPT)))/double(SLOP);%mg/cm3
                     E(i,j)=double(10.5)*(double((1e-3))*double(rou(i,j)))^2.57;
                     EA(FN)=EA(FN) + double(double(E(i,j))*double(Pixel_scale^2));
-                    tmp_rou=tmp_rou+rou(i,j);
+                   tmp_rou=tmp_rou+rou(i,j);
                 else    %element less than threshold assign to 0
                     pixel(i,j)=0;
                 end
@@ -66,6 +67,7 @@
         min_y(FN)=min(range_y);
         max_y(FN)=max(range_y);
         ave_rou(FN)=tmp_rou/pix_num(FN);
+        %ave_rou(FN)=sum(sum(rou))/pix_num(FN);
         %Pixel_scale(FN)=sqrt(CSV_CSA(FN)/pix_num(FN));
 
         GA(FN)=EA(FN)/(2*(1+mu));
@@ -113,9 +115,6 @@
             end
         end
 
-        EI_x(FN)=EI_up+EI_down;
-        I_x(FN)=I_up+I_down;
-        Z_x(FN)=I_x(FN)/(dx_max(FN)*Pixel_scale);
     
         %y direction
         Minimum=Inf;
@@ -164,18 +163,24 @@
     end
     ave_rou=ave_rou';
     EI_x=EI_x';
+    EI_y=EI_y';
     I_x=I_x';
+    I_y=I_y';
+    Z_x=Z_x';
+    Z_y=Z_y';
     EA=EA';
     GA=GA';
-    Z_x=Z_x';
 
     ban_axis_x(FN)=ban_axis_x(FN)';
-    [r1,p1]=corr(CSMI_inplane,EI_x)
-    [ry1,py1]=corr( CSMI_outplane,EI_y')
-    [r2,p2]=corr(CSMI_inplane,I_x)
-    [r3,p3]=corr(CSMI_inplane,EA)
-    [r4,p4]=corr(CSMI_inplane,GA)
-    [r5,p5]=corr(SM_inplane,Z_x)
+    [r_EIx,p_EIx]=corr(CSMI_inplane,EI_x)
+    [r_EIy,p_EIy]=corr( CSMI_outplane,EI_y)
+    [r_Zx,p_Zx]=corr(SM_inplane,Z_x)
+    [r_Zy,p_Zy]=corr(SM_outplane,Z_y)
+    [r_Ix,p_Ix]=corr(CSMI_inplane,I_x)
+    [r_Iy,p_Iy]=corr( CSMI_outplane,I_y)
+    [r_EA,p_EA]=corr(CSV_CSA,EA)
+    
+    
 
 
 

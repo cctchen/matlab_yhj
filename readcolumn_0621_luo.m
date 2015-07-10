@@ -15,6 +15,7 @@ CSV_CSA=xlsread([path '\hipdb_0709.csv'],'FP:FP');
 CSMI_inplane=xlsread([path '\hipdb_0709.csv'],'FX:FX');
 CSMI_outplane=xlsread([path '\hipdb_0709.csv'],'FY:FY');
 SM_inplane=xlsread([path '\hipdb_0709.csv'],'GA:GA');
+SM_outplane=xlsread([path 'hipdb_0709.csv'],'GB:GB');
 [status,list]=system(['dir ' path '*FN.dcm /S/B']);
 
 filelist = strsplit(list);
