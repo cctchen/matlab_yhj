@@ -1,4 +1,4 @@
-
+function readcolumn_0621()
     clear;
     global ban_axis_x ban_axis_y;
     
@@ -9,8 +9,8 @@
     mu=0.3;
     %pixel_A = 0.048828^2;
     Pixel_scale=0.048828;
-    datapath='D:\work\mechanical\project_for_graduate\matlab\mycode\data\';
-    %datapath='D:\CODE\yhjmatlab\matlab_yhj\data\';
+    %datapath='D:\work\mechanical\project_for_graduate\matlab\mycode\data\';
+    datapath='D:\CODE\yhjmatlab\matlab_yhj\data\';
 
     [TMP,CSV_NAME]=xlsread([datapath,'hipdb_0709.csv'],'D:D');
     CSV_CSA=xlsread([datapath 'hipdb_0709.csv'],'FP:FP');
@@ -60,6 +60,8 @@
             end
         end
 
+        EEaAA=cal_EA(1,psize_y,pixel,0);
+
         [range_x,range_y]=find(pixel > Pthreshold);%find the max distance to neutral axis
         min_x(FN)=min(range_x);
         max_x(FN)=max(range_x);
@@ -76,8 +78,8 @@
         %x direction
         Minimum=Inf;
         for banl=2:(psize_y-1)
-            up=cal_EA(1,(banl-1),pixel,0,Pthreshold,E,Pixel_scale);
-            down=cal_EA(banl,psize_y,pixel,0,Pthreshold,E,Pixel_scale);
+            up=cal_EA(1,(banl-1),pixel,0);
+            down=cal_EA(banl,psize_y,pixel,0);
             diff_abs=abs((up-down));
 
             if (diff_abs<Minimum)
@@ -120,8 +122,8 @@
         %y direction
         Minimum=Inf;
         for banl=2:(psize_x-1)
-            left=cal_EA(1,(banl-1),pixel,1,Pthreshold,E,Pixel_scale);
-            right=cal_EA(banl,psize_y,pixel,1,Pthreshold,E,Pixel_scale);
+            left=cal_EA(1,(banl-1),pixel,1);
+            right=cal_EA(banl,psize_y,pixel,1);
             diff_abs=abs((left-right));
 
             if (diff_abs<Minimum)
@@ -162,6 +164,7 @@
         Z_y(FN)=I_y(FN)/(dy_max(FN)*Pixel_scale);
    
     end
+    ban_axis_y
     ave_rou=ave_rou';
     EI_x=EI_x';
     I_x=I_x';
